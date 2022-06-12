@@ -40,10 +40,9 @@ public class UserController {
 //		return user;
 //	}
 
-	@DeleteMapping(value = "/deleteUser/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/user/deleteUser/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteUser(@RequestBody User user) throws UserNotFoundException, UnhandledException {
 		try {
-			System.out.println("controller called");
 			dao.deleteUser(user);
 			return new ResponseEntity<String>("Account Deleted", HttpStatus.ACCEPTED);
 		} catch (UserNotFoundException exc) {

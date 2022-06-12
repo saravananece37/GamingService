@@ -1,5 +1,7 @@
 package com.game.starter.helper;
 
+import org.springframework.http.HttpStatus;
+
 public abstract class GamesException extends Exception{
 	
 	
@@ -7,14 +9,14 @@ public abstract class GamesException extends Exception{
 
 	protected String message;
 
-	protected String errorReason;
+	protected HttpStatus errorReason;
 	
 	public String getMessage() {
 		return message;
 	}
 
-	public String getErrorReason() {
-		return errorReason;
+	public HttpStatus getErrorReason() {
+		return (HttpStatus) errorReason;
 	}
 
 

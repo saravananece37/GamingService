@@ -18,7 +18,6 @@ import com.game.starter.repository.GameRepository;
 @RestController
 public class GameController {
 
-
 	
 	@Autowired
 	GameRepository repo;

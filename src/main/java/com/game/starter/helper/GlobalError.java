@@ -1,13 +1,15 @@
 package com.game.starter.helper;
 
+import org.springframework.http.HttpStatus;
+
 public class GlobalError {
 	  private String message;
-	  private String errorReason;
+	  private HttpStatus errorReason;
 
 	  public GlobalError() {
 	  }
 
-	  public GlobalError(String message, String errorReason) {
+	  public GlobalError(String message, HttpStatus errorReason) {
 	    this.message = message;
 	    this.errorReason = errorReason;
 	  }
@@ -16,7 +18,7 @@ public class GlobalError {
 	    this.message = message;
 	  }
 
-	  public void setErrorReason(String errorReason) {
+	  public void setErrorReason(HttpStatus errorReason) {
 	    this.errorReason = errorReason;
 	  }
 
@@ -24,7 +26,7 @@ public class GlobalError {
 	    return message;
 	  }
 
-	  public String getErrorReason() {
+	  public HttpStatus getErrorReason() {
 	    return errorReason;
 	  }
 
