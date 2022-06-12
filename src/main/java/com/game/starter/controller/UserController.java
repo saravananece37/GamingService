@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.game.starter.helper.CommonException;
+import com.game.starter.helper.UnhandledException;
 import com.game.starter.helper.UserAlreadyExistException;
 import com.game.starter.helper.UserNotFoundException;
 import com.game.starter.model.User;
@@ -24,13 +24,13 @@ public class UserController {
 	UserDAO dao;
 
 	@PostMapping(value = "/user/newUser", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> addNewUser(@RequestBody User user) throws UserAlreadyExistException, CommonException {
+	public ResponseEntity<User> addNewUser(@RequestBody User user) throws UserAlreadyExistException, UnhandledException {
 		try {
 			return new ResponseEntity<User>(dao.addNewUser(user), HttpStatus.OK);
 		} catch (UserAlreadyExistException e) {
 			throw new UserAlreadyExistException(e.getMessage());
 		} catch (Exception e) {
-			throw new CommonException(e.getMessage());
+			throw new UnhandledException(e.getMessage());
 		}
 	}
 
@@ -41,7 +41,7 @@ public class UserController {
 //	}
 
 	@DeleteMapping(value = "/deleteUser/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUser(@RequestBody User user) throws UserNotFoundException, CommonException {
+	public ResponseEntity<String> deleteUser(@RequestBody User user) throws UserNotFoundException, UnhandledException {
 		try {
 			System.out.println("controller called");
 			dao.deleteUser(user);
@@ -49,7 +49,7 @@ public class UserController {
 		} catch (UserNotFoundException exc) {
 			throw new UserNotFoundException(exc.getMessage());
 		} catch (Exception e) {
-			throw new CommonException(e.getMessage());
+			throw new UnhandledException(e.getMessage());
 		}
 	}
 
