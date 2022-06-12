@@ -13,8 +13,8 @@ import lombok.Data;
 @Table(name = "user_info")
 public class User {
 
-	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
 	private int userID;
 
 	private String userName;
