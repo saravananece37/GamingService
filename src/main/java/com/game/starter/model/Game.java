@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Data
@@ -22,6 +24,7 @@ public class Game {
 	private int gameID;
 
 	@OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@JsonManagedReference
 	private Set<Score> scores;
 
 	@Column(unique = true)
@@ -41,6 +44,14 @@ public class Game {
 
 	public void setGameName(String gameName) {
 		this.gameName = gameName;
+	}
+
+	public Set<Score> getScores() {
+		return scores;
+	}
+
+	public void setScores(Set<Score> scores) {
+		this.scores = scores;
 	}
 
 }

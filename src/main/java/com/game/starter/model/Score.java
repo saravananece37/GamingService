@@ -27,14 +27,15 @@ public class Score {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-//	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 //	@JoinColumn(name = "user_id")
 //	@JsonIgnoreProperties("scores")
 	private User user;
 
 	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 //	@JoinColumn(name = "game_id", nullable = false)
+//	@JsonBackReference
 	private Game game;
 
 	private int score;

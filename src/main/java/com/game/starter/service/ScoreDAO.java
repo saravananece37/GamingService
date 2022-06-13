@@ -75,7 +75,8 @@ public class ScoreDAO {
 		if (!gameOptional.isPresent())
 			throw new GameNotFoundException("GameNotFound");
 		System.out.println("called tp list");
-		return (List<Score>) scoreRepo.findByGameOrderByScore(gameOptional.get(),PageRequest.ofSize(topResult));
+		List<Score> scores= (List<Score>) scoreRepo.findByGameOrderByScore(gameOptional.get(),PageRequest.ofSize(topResult));
+		return  scores;
 	}
 
 }

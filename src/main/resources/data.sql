@@ -1,1 +1,6 @@
-CREATE TABLE IF NOT EXISTS User_info_check (user_id INTEGER PRIMARY KEY AUTO_INCREMENT,user_name VARCHAR(50) NOT NULL);
+insert into `user_info` values(1,'sar');
+insert into `user_info` values(2,'mou');
+insert into `user_info` values(3,'har');
+
+insert into `game` values(1,'cricket');
+

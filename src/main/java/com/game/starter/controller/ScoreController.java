@@ -26,9 +26,10 @@ public class ScoreController {
 	ScoreDAO dao;
 
 	@GetMapping(value = "/score/{gameName}/{topResult}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Score>> getTopScorer(@PathVariable(name = "gameName") String gameName,
+	public List<Score> getTopScorer(@PathVariable(name = "gameName") String gameName,
 			@PathVariable(name = "topResult") int topResult) throws GameNotFoundException {
-		return new ResponseEntity<List<Score>>(dao.getTopList(gameName, topResult), HttpStatus.OK);
+		List<Score> scores=dao.getTopList(gameName, topResult);
+		return scores;
 	}
 
 	@PostMapping(value = "/score/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

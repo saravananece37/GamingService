@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Data
@@ -24,14 +26,15 @@ public class User {
 	@Id
 	private int userID;
 
-//	@JsonManagedReference
-//	@Default
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Collection<Score> scores = new HashSet();
 
 	@Column(unique = true)
 	private String userName;
 
+	
+	
 	public int getUserID() {
 		return userID;
 	}
@@ -47,4 +50,14 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	public Collection<Score> getScores() {
+		return scores;
+	}
+
+	public void setScores(Collection<Score> scores) {
+		this.scores = scores;
+	}
+	
+	
 }
