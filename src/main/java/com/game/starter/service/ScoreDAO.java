@@ -1,12 +1,13 @@
 package com.game.starter.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.game.starter.helper.GameNotFoundException;
-import com.game.starter.helper.GamesException;
 import com.game.starter.helper.NoExisitingScoreFoundException;
 import com.game.starter.helper.UserNotFoundException;
 import com.game.starter.model.Game;
@@ -66,6 +67,15 @@ public class ScoreDAO {
 		score.setScore(score.getScore()+scoreOptional.get().getScore());
 		
 		return scoreRepo.save(score);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Score> getTopList(String gameName,int topResult) throws GameNotFoundException {
+		Optional<Game> gameOptional = gameRepo.findByGameName(gameName);
+		if (!gameOptional.isPresent())
+			throw new GameNotFoundException("GameNotFound");
+		System.out.println("called tp list");
+		return (List<Score>) scoreRepo.findByGameOrderByScore(gameOptional.get(),PageRequest.ofSize(topResult));
 	}
 
 }
