@@ -29,5 +29,22 @@ public class GameServiceExceptionHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<GlobalError>(error, HttpStatus.CONFLICT);		
 	}
 		
+	@ExceptionHandler(GameNotFoundException.class)
+	public ResponseEntity<GlobalError> gameNotMatchingException(GameNotFoundException exception)
+	{
+		GlobalError error=new GlobalError();
+		error.setErrorReason(exception.getErrorReason());
+		error.setMessage(exception.getMessage());
+		return new ResponseEntity<GlobalError>(error, HttpStatus.NOT_FOUND);		
+	}
+	
+	@ExceptionHandler(NoExisitingScoreFoundException.class)
+	public ResponseEntity<GlobalError> NoExisitingScoreFound(NoExisitingScoreFoundException exception)
+	{
+		GlobalError error=new GlobalError();
+		error.setErrorReason(exception.getErrorReason());
+		error.setMessage(exception.getMessage());
+		return new ResponseEntity<GlobalError>(error, HttpStatus.NOT_FOUND);		
+	}
 
 }

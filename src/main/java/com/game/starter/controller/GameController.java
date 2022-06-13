@@ -12,15 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.game.starter.helper.GameAlreadyExistException;
 import com.game.starter.model.Game;
 import com.game.starter.repository.GameRepository;
+import com.game.starter.service.GameDAO;
 
 @RestController
 public class GameController {
 
 	
 	@Autowired
-	GameRepository repo;
+	GameDAO dao;
 	
 	@GetMapping(value="/game",consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Game> getGamesDetails()
@@ -29,9 +31,9 @@ public class GameController {
 	}
 
 	@PostMapping(value="/game/newGame",consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public Game addNewGame(@RequestBody Game game)
+	public Game addNewGame(@RequestBody Game game) throws GameAlreadyExistException
 	{
-		return repo.save(game);
+		return dao.addNewGame(game);
 	}
 
 	@PutMapping(value="/game/updateGame",consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)

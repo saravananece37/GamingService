@@ -1,9 +1,15 @@
 package com.game.starter.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 
@@ -11,18 +17,22 @@ import lombok.Data;
 @Entity
 public class Game {
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int gameId;
+	private int gameID;
 
+	@OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Score> scores;
+
+	@Column(unique = true)
 	private String gameName;
 
-	public int getGameId() {
-		return gameId;
+	public int getGameID() {
+		return gameID;
 	}
 
-	public void setGameId(int gameId) {
-		this.gameId = gameId;
+	public void setGameID(int gameID) {
+		this.gameID = gameID;
 	}
 
 	public String getGameName() {

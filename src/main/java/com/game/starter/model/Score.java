@@ -2,16 +2,23 @@ package com.game.starter.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Data;
+    
 @Data
 @Entity
 public class Score {
@@ -19,10 +26,16 @@ public class Score {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-//
-//	private User user;
-//
-//	private Game game;
+	
+//	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+//	@JoinColumn(name = "user_id")
+//	@JsonIgnoreProperties("scores")
+	private User user;
+
+	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+//	@JoinColumn(name = "game_id", nullable = false)
+	private Game game;
 
 	private int score;
 
@@ -39,22 +52,6 @@ public class Score {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
-//
-//	public Game getGame() {
-//		return game;
-//	}
-//
-//	public void setGame(Game game) {
-//		this.game = game;
-//	}
 
 	public int getScore() {
 		return score;
@@ -80,4 +77,21 @@ public class Score {
 		this.updatedAt = updatedAt;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	
 }
