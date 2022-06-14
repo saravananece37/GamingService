@@ -8,34 +8,29 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
-    
+import lombok.NoArgsConstructor;
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Score {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-//	@JoinColumn(name = "user_id")
-//	@JsonIgnoreProperties("scores")
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 
-	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-//	@JoinColumn(name = "game_id", nullable = false)
-//	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Game game;
 
 	private int score;
@@ -94,5 +89,4 @@ public class Score {
 		this.game = game;
 	}
 
-	
 }

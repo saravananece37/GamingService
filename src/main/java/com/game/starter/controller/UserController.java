@@ -33,13 +33,8 @@ public class UserController {
 		}
 	}
 
-//	@PutMapping(value = "/user/updateUser/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	public User updateUser(@RequestBody User user, @PathVariable(name = "userId") int userId) {
-//		System.out.println(user.getUserID());
-//		return user;
-//	}
 
-	@DeleteMapping(value = "/user/deleteUser/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/user/deleteUser", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteUser(@RequestBody User user) throws UserNotFoundException, UnhandledException {
 		try {
 			dao.deleteUser(user);

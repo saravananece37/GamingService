@@ -1,7 +1,7 @@
 package com.game.starter.model;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -27,14 +27,12 @@ public class User {
 	private int userID;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private Collection<Score> scores = new HashSet();
+	@JsonIgnore
+	private Set<Score> scores;
 
 	@Column(unique = true)
 	private String userName;
 
-	
-	
 	public int getUserID() {
 		return userID;
 	}
@@ -55,9 +53,8 @@ public class User {
 		return scores;
 	}
 
-	public void setScores(Collection<Score> scores) {
+	public void setScores(Set<Score> scores) {
 		this.scores = scores;
 	}
-	
-	
+
 }

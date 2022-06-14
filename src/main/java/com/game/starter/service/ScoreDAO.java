@@ -1,5 +1,6 @@
 package com.game.starter.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,8 @@ public class ScoreDAO {
 	@Autowired
 	UserRepository userRepo;
 
-	public Score addNewScore(Score score) throws UserNotFoundException, GameNotFoundException  {
-		
+	public Score addNewScore(Score score) throws UserNotFoundException, GameNotFoundException {
+
 		User user = score.getUser();
 		Game game = score.getGame();
 		Optional<User> userOptional = userRepo.findByUserName(user.getUserName());
@@ -45,38 +46,43 @@ public class ScoreDAO {
 		return scoreRepo.save(score);
 	}
 
-	public Score updateScore(Score score) throws UserNotFoundException, GameNotFoundException, NoExisitingScoreFoundException {
+	public Score updateScore(Score score)
+			throws UserNotFoundException, GameNotFoundException, NoExisitingScoreFoundException {
 
 		User user = score.getUser();
 		Game game = score.getGame();
 		Optional<User> userOptional = userRepo.findByUserName(user.getUserName());
 		Optional<Game> gameOptional = gameRepo.findByGameName(game.getGameName());
-		
+
 		if (!userOptional.isPresent())
 			throw new UserNotFoundException("UserNotFound");
 		if (!gameOptional.isPresent())
 			throw new GameNotFoundException("GameNotFound");
-		
-		Optional<Score> scoreOptional = scoreRepo.findByUserAndGame(userOptional.get(),gameOptional.get());
 
-		if(!scoreOptional.isPresent())
+		Optional<Score> scoreOptional = scoreRepo.findByUserAndGame(userOptional.get(), gameOptional.get());
+
+		if (!scoreOptional.isPresent())
 			throw new NoExisitingScoreFoundException("NoScoreFound");
 
 		score.setUser(userOptional.get());
 		score.setGame(gameOptional.get());
-		score.setScore(score.getScore()+scoreOptional.get().getScore());
-		
+		score.setScore(score.getScore() + scoreOptional.get().getScore());
+
 		return scoreRepo.save(score);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Score> getTopList(String gameName,int topResult) throws GameNotFoundException {
+	public List<String> getTopList(String gameName, int topResult) throws GameNotFoundException {
 		Optional<Game> gameOptional = gameRepo.findByGameName(gameName);
 		if (!gameOptional.isPresent())
 			throw new GameNotFoundException("GameNotFound");
 		System.out.println("called tp list");
-		List<Score> scores= (List<Score>) scoreRepo.findByGameOrderByScore(gameOptional.get(),PageRequest.ofSize(topResult));
-		return  scores;
+		List<Score> scores = (List<Score>) scoreRepo.findByGameOrderByScoreDesc(gameOptional.get(),
+				PageRequest.ofSize(topResult));
+		List<String> result = new ArrayList<String>();
+		scores.forEach(
+				score -> result.add("UserName : " + score.getUser().getUserName() + ", Score : " + score.getScore()));
+		return result;
 	}
 
 }

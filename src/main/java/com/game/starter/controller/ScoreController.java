@@ -26,21 +26,22 @@ public class ScoreController {
 	ScoreDAO dao;
 
 	@GetMapping(value = "/score/{gameName}/{topResult}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Score> getTopScorer(@PathVariable(name = "gameName") String gameName,
+	public ResponseEntity<List<String>> getTopScorer(@PathVariable(name = "gameName") String gameName,
 			@PathVariable(name = "topResult") int topResult) throws GameNotFoundException {
-		List<Score> scores=dao.getTopList(gameName, topResult);
-		return scores;
+		List<String> result = dao.getTopList(gameName, topResult);
+		return new ResponseEntity<List<String>>(result, HttpStatus.ACCEPTED);
 	}
 
-	@PostMapping(value = "/score/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Score addNewScorer(@RequestBody Score score) throws UserNotFoundException, GameNotFoundException {
-		return dao.addNewScore(score);
+	@PostMapping(value = "/score", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Score> addNewScorer(@RequestBody Score score)
+			throws UserNotFoundException, GameNotFoundException {
+		return new ResponseEntity<Score>(dao.addNewScore(score), HttpStatus.OK);
 	}
 
-	@PutMapping(value = "/score/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Score updateScorer(@RequestBody Score score)
+	@PutMapping(value = "/score", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Score> updateScorer(@RequestBody Score score)
 			throws UserNotFoundException, GameNotFoundException, NoExisitingScoreFoundException {
-		return dao.updateScore(score);
+		return new ResponseEntity<Score>(dao.updateScore(score), HttpStatus.OK);
 	}
 
 }
