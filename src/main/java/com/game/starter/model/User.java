@@ -1,6 +1,5 @@
 package com.game.starter.model;
 
-import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,9 +14,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-
-@Data
+//@Data
 @Entity
 @Table(name = "user_info")
 public class User {
@@ -41,20 +38,20 @@ public class User {
 		this.userID = userID;
 	}
 
+	public Set<Score> getScores() {
+		return scores;
+	}
+
+	public void setScores(Set<Score> scores) {
+		this.scores = scores;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-
-	public Collection<Score> getScores() {
-		return scores;
-	}
-
-	public void setScores(Set<Score> scores) {
-		this.scores = scores;
 	}
 
 }

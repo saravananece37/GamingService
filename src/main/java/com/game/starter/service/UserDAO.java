@@ -22,7 +22,6 @@ public class UserDAO {
 	{
 		
 		Optional<User> optional=repo.findByUserName(user.getUserName());
-		System.out.println(optional.isPresent()+" user exist");
 		if(optional.isPresent())
 			throw new UserAlreadyExistException("UserAlreadyExist");
 		return repo.save(user);
@@ -30,9 +29,7 @@ public class UserDAO {
 
 	public void deleteUser(User user) throws UserNotFoundException
 	{
-		System.out.println(user.getUserID()+"  "+user.getUserName());
 		Optional<User> optional=repo.findByUserID(user.getUserID());
-		System.out.println(optional.isPresent()+" user delete present");
 		if(!optional.isPresent())
 			throw new UserNotFoundException("UserNotFound");
 		repo.delete(user);

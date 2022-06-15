@@ -63,11 +63,10 @@ public class ScoreDAO {
 
 		if (!scoreOptional.isPresent())
 			throw new NoExisitingScoreFoundException("NoScoreFound");
-
-		score.setUser(userOptional.get());
-		score.setGame(gameOptional.get());
-		score.setScore(score.getScore() + scoreOptional.get().getScore());
-
+		
+		int updatedScore=score.getScore()+scoreOptional.get().getScore();
+		score=scoreOptional.get();
+		score.setScore(updatedScore);
 		return scoreRepo.save(score);
 	}
 
@@ -76,7 +75,6 @@ public class ScoreDAO {
 		Optional<Game> gameOptional = gameRepo.findByGameName(gameName);
 		if (!gameOptional.isPresent())
 			throw new GameNotFoundException("GameNotFound");
-		System.out.println("called tp list");
 		List<Score> scores = (List<Score>) scoreRepo.findByGameOrderByScoreDesc(gameOptional.get(),
 				PageRequest.ofSize(topResult));
 		List<String> result = new ArrayList<String>();

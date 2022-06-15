@@ -19,9 +19,8 @@ public class GameDAO {
 	public Game addNewGame(Game game) throws GameAlreadyExistException {
 
 		Optional<Game> optional = repo.findByGameName(game.getGameName());
-		System.out.println(optional.isPresent() + " user exist");
 		if (optional.isPresent())
-			throw new GameAlreadyExistException("UserAlreadyExist");
+			throw new GameAlreadyExistException("GameAlreadyExist");
 		return repo.save(game);
 	}
 

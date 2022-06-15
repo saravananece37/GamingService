@@ -13,9 +13,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-
-@Data
+//@Data
 @Entity
 public class Game {
 
@@ -38,20 +36,20 @@ public class Game {
 		this.gameID = gameID;
 	}
 
-	public String getGameName() {
-		return gameName;
-	}
-
-	public void setGameName(String gameName) {
-		this.gameName = gameName;
-	}
-
 	public Set<Score> getScores() {
 		return scores;
 	}
 
 	public void setScores(Set<Score> scores) {
 		this.scores = scores;
+	}
+
+	public String getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
 	}
 
 }
